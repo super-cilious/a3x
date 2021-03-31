@@ -381,6 +381,8 @@ fn MonitorCommandSetLayout { -- }
 	Kbd@ DeviceSelectNode
 		layoutname@ "layout" DSetProperty
 	DeviceExit
+
+	layoutname@ "keyboard-layout" NVRAMSetVar
 end
 
 fn MonitorCommandBoot { -- }
