@@ -27,7 +27,7 @@ fn BuildGBootDisk { -- }
 
 			SBootDiskNode@ "bootAlias" DAddProperty
 		DeviceExit
-	end else
+	else
 		"boot-dev" NVRAMDeleteVar
 		(* "boot-dev phony or not found, 'bootdisk' node will be absent\n" Printf *)
 	end

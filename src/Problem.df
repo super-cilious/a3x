@@ -29,12 +29,12 @@ fn Problem { ... fmt -- }
 		if (c@ 'c' ==)
 			NVRAMFormat
 			"nvram cleared.\n" Printf
-		end elseif (c@ 'v' ==)
+		elseif (c@ 'v' ==)
 			"true" "verbose?" NVRAMSetVar
 			"verbose mode enabled.\n" Printf
-		end elseif (c@ 'm' ==)
+		elseif (c@ 'm' ==)
 			SavedState@ DebugMonitor
-		end elseif (c@ 'r' ==)
+		elseif (c@ 'r' ==)
 			"resetting.\n" Printf
 			LateReset
 		end

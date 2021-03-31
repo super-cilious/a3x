@@ -4,11 +4,14 @@
 var AKeyboardDev 0
 var AKeyboardCount 0
 
-var AKeyboardID 0
-
 const AKeyboardMID 0x8FC48FC4
 
-fn AKeyboardPoll { -- }
+fn AKeyboardInit { -- }
+	DeviceNew
+		"kbd" DSetName
+		DevCurrent@ AKeyboardDev!
+	DeviceExit
+
 	auto i
 	1 i!
 
@@ -27,6 +30,8 @@ fn AKeyboardPoll { -- }
 					hmm@ DSetName
 
 					i@ "amanatsu,unit" DAddProperty
+					
+					"dvorak" "layout" DAddProperty
 
 					pointerof AKeyboardReadM "read" DAddMethod
 
@@ -106,16 +111,6 @@ fn AKeyboardPopCode { id -- code }
 	rs@ InterruptRestore
 end
 
-fn AKeyboardSpecial { code -- char }
-	if (code@ 50 ==)
-		'\n' char!
-	end elseif (code@ 51 ==)
-		'\b' char!
-	end else
-		ERR char!
-	end
-end
-
 fn private AKeyboardIsDownM { argvt argcn -- out1 out2 out3 }
 	argvt@ @
 	AKeyboardIsDown out1!
@@ -163,13 +158,13 @@ fn AKeyboardRead { -- c }
 	if (code@ 80 ==)
 		1 Ctrl!
 		return
-	end elseif (code@ 82 ==)
+	elseif (code@ 82 ==)
 		1 Shift!
 		return
-	end elseif (code@ 32848 ==)
+	elseif (code@ 32848 ==)
 		0 Ctrl!
 		return
-	end elseif (code@ 32850 ==)
+	elseif (code@ 32850 ==)
 		0 Shift!
 		return
 	end
@@ -178,14 +173,22 @@ fn AKeyboardRead { -- c }
 		return
 	end
 
-	if (code@ 50 >=) code@ AKeyboardSpecial c! return end
-
-	if (Shift@)
-		[code@]AKeyboardLayoutShift@ c!
-	end elseif (Ctrl@)
-		[code@]AKeyboardLayoutCtrl@ c!
-	end else
-		[code@]AKeyboardLayout@ c!
+	auto layout
+	"layout" DGetProperty layout!
+	
+	auto i
+	0 i!
+	while (i@ AKeyboardLayouts@ <)
+		if ([i@ 2 *]AKeyboardLayout@ layout@ strcmp)
+			auto layoutptr
+			[i@ 2 * 1 +]AKeyboardLayout@ layoutptr!
+			
+			if (Shift@)
+				layoutptr@ AKeyboardShiftOffset@ code@ + 4 * + @ c!
+			else
+				layoutptr@ code@ 4 * + c!
+			end
+		end
 	end
 end
 
@@ -205,14 +208,11 @@ fn AKeyboardReadScan { -- scan }
 	end
 end
 
-fn AKeyboardInit { -- }
-	DeviceNew
-		"kbd" DSetName
-		DevCurrent@ AKeyboardDev!
-	DeviceExit
-end
+(* keyboard layouts *)
 
-table AKeyboardLayout
+const AKeyboardShiftOffset 52
+
+table AQwertyKeyboardLayout
 	'a'
 	'b' 'c' 'd'
 	'e' 'f' 'g'
@@ -241,40 +241,8 @@ table AKeyboardLayout
 	'\''
 	','
 	'`'
-endtable
-
-table AKeyboardLayoutCtrl
-	'a'
-	'b' 'c' 'd'
-	'e' 'f' 'g'
-	'h' 'i' 'j'
-	'k' 'l' 'm'
-	'n' 'o' 'p'
-	'q' 'r' 's'
-	't' 'u' 'v'
-	'w' 'x' 'y'
-	'z'
-	'0' '1' '2'
-	'3' '4' '5'
-	'6' '7' '8'
-	'9'
-	';'
-	' '
-	' '
-	'-'
-	'='
-	'['
-	']'
-	'\\'
-	0
-	'/'
-	'.'
-	'\''
-	','
-	'`'
-endtable
-
-table AKeyboardLayoutShift
+	'\n'
+	'\b'
 	'A'
 	'B' 'C' 'D'
 	'E' 'F' 'G'
@@ -303,4 +271,78 @@ table AKeyboardLayoutShift
 	'"'
 	'<'
 	'~'
+	'\n'
+	'\b'
+endtable
+
+table ADvorakKeyboardLayout
+	'a'
+	'x' 'j' 'e'
+	'.' 'u' 'i'
+	'd' 'c' 'h'
+	't' 'n' 'm'
+	'b' 'r' 'l'
+	'\'' 'p' 'o'
+	'y' 'g' 'k'
+	',' 'q' 'f'
+	';'
+	'0' '1' '2'
+	'3' '4' '5'
+	'6' '7' '8'
+	'9'
+	's'
+	' '
+	' '
+	'['
+	']'
+	'/'
+	'='
+	'\\'
+	0
+	'z'
+	'v'
+	'-'
+	'w'
+	'`'
+	'\n'
+	'\b'
+	'A'
+	'X' 'J' 'E'
+	'>' 'U' 'I'
+	'D' 'C' 'H'
+	'T' 'N' 'M'
+	'b' 'r' 'l'
+	'"' 'P' 'O'
+	'Y' 'G' 'K'
+	'<' 'Q' 'F'
+	':'
+	')' '!' '@'
+	'#' '$' '%'
+	'^' '&' '*'
+	'('
+	'S'
+	' '
+	' '
+	'{'
+	'}'
+	'?'
+	'}'
+	'|'
+	0
+	'Z'
+	'V'
+	'_'
+	'W'
+	'~'
+	'\n'
+	'\b'
+endtable
+
+const AKeyboardLayouts 2
+
+table AKeyboardLayout
+	"qwerty"
+	pointerof AQwertyKeyboardLayout
+	"dvorak"
+	pointerof ADvorakKeyboardLayout
 endtable

@@ -2,7 +2,6 @@
 #include "<inc>/a3x.h"
 
 extern AKeyboardInit { -- }
-extern AKeyboardPoll { -- }
 
 extern AMouseInit { -- }
 extern AMousePoll { -- }
@@ -20,7 +19,6 @@ fn BuildAmanatsu { -- }
 		pointerof AmanatsuReset "reset" DAddMethod
 
 		AKeyboardInit
-		AKeyboardPoll
 		
 		AMouseInit
 		AMousePoll

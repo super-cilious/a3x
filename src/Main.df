@@ -59,12 +59,12 @@ fn Main { -- }
 			ConsoleUserOut
 
 			[r@]BootErrors@ "boot: %s\n" Printf
-		end else
+		else
 			ConsoleUserOut
 
 			"user cancelled automatic boot\n" Printf
 		end
-	end else
+	else
 		"auto-boot?=false, not automatically booting\n" Printf
 	end
 

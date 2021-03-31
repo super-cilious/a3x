@@ -92,7 +92,7 @@ fn GConsoleDefault { -- }
 
 		GCGWidth@ 2 / GCWidth@ FontWidth * 2 / - GConsoleX!
 		GCGHeight@ 2 / GCHeight@ FontHeight * 2 / - GConsoleY!
-	end else
+	else
 		0 GCFancy!
 
 		GCGWidth@ FontWidth / GCWidth!
@@ -383,7 +383,7 @@ fn VConsoleDraw { -- }
 		GCHeight@ FontHeight * 10 +
 		GConsoleBG
 		GConsoleRRect
-	end else (* un-pretty box *)
+	else (* un-pretty box *)
 		0 0 GCGWidth@ GCGHeight@ GCColorDefBG@ GConsoleRRect
 	end
 end
@@ -421,7 +421,7 @@ fn GConsoleSetColor { -- }
 		GCColorDefBG@ GCColorBG!
 
 		0 GCInverted!
-	end elseif ([0]GCEVT@ 7 ==)
+	elseif ([0]GCEVT@ 7 ==)
 		if (GCInverted@ ~~)
 			GCColorFG@ color!
 			GCColorBG@ GCColorFG!
@@ -429,30 +429,30 @@ fn GConsoleSetColor { -- }
 
 			1 GCInverted!
 		end
-	end elseif ([0]GCEVT@ 39 ==)
+	elseif ([0]GCEVT@ 39 ==)
 		GCColorDefFG@ GCColorFG!
-	end elseif ([0]GCEVT@ 49 ==)
+	elseif ([0]GCEVT@ 49 ==)
 		GCColorDefBG@ GCColorBG!
-	end elseif ([0]GCEVT@ 30 >= [0]GCEVT@ 37 <= &&) (* foreground, first 8 *)
+	elseif ([0]GCEVT@ 30 >= [0]GCEVT@ 37 <= &&) (* foreground, first 8 *)
 		[0]GCEVT@ 30 - color!
 
 		[color@]ColorIndex@ GCColorFG!
-	end elseif ([0]GCEVT@ 40 >= [0]GCEVT@ 47 <= &&) (* background, first 8 *)
+	elseif ([0]GCEVT@ 40 >= [0]GCEVT@ 47 <= &&) (* background, first 8 *)
 		[0]GCEVT@ 40 - color!
 
 		[color@]ColorIndex@ GCColorBG!
-	end elseif ([0]GCEVT@ 90 >= [0]GCEVT@ 97 <= &&) (* foreground, second 8 *)
+	elseif ([0]GCEVT@ 90 >= [0]GCEVT@ 97 <= &&) (* foreground, second 8 *)
 		[0]GCEVT@ 90 - color!
 
 		[color@]ColorIndex2@ GCColorFG!
-	end elseif ([0]GCEVT@ 100 >= [0]GCEVT@ 107 <= &&) (* background, second 8 *)
+	elseif ([0]GCEVT@ 100 >= [0]GCEVT@ 107 <= &&) (* background, second 8 *)
 		[0]GCEVT@ 100 - color!
 
 		[color@]ColorIndex2@ GCColorBG!
-	end elseif ([1]GCEVT@ 5 ==)
+	elseif ([1]GCEVT@ 5 ==)
 		if ([0]GCEVT@ 38 ==)
 			[2]GCEVT@ GCColorFG!
-		end elseif ([0]GCEVT@ 48 ==)
+		elseif ([0]GCEVT@ 48 ==)
 			[2]GCEVT@ GCColorBG!
 		end
 	end
@@ -486,10 +486,10 @@ fn GConsoleParseEscape { c -- }
 		return
 	end
 
-	if (c@ '[' ==) return end
-	elseif (c@ ';' ==) GCEV@ 1 + GCEVC % GCEV! return end
-	elseif (c@ 'm' ==) GConsoleSetColor end
-	elseif (c@ 'c' ==) GConsoleReset end
+	if (c@ '[' ==) return
+	elseif (c@ ';' ==) GCEV@ 1 + GCEVC % GCEV! return
+	elseif (c@ 'm' ==) GConsoleSetColor
+	elseif (c@ 'c' ==) GConsoleReset
 	elseif (c@ 'K' ==) GConsoleClearLine end
 
 	0 GCEscape!
@@ -530,13 +530,13 @@ fn GConsolePutCharF { char -- }
 	if (char@ '\n' ==)
 		GConsoleNewline
 		return
-	end elseif (char@ '\b' ==)
+	elseif (char@ '\b' ==)
 		GConsoleBack
 		return
-	end elseif (char@ '\t' ==)
+	elseif (char@ '\t' ==)
 		GConsoleTab
 		return
-	end elseif (char@ '\r' ==)
+	elseif (char@ '\r' ==)
 		0 GCCurX!
 		return
 	end

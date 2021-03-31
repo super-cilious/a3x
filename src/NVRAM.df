@@ -4,7 +4,7 @@
 fn NVRAMCheck { -- ok }
 	if (NVRAMHeader_Magic NVRAMOffset @ NVRAMMagic ==)
 		1 ok!
-	end else
+	else
 		0 ok!
 	end
 end
@@ -64,7 +64,7 @@ fn NVRAMSetVar { str name -- }
 
 		vl@ name@ strcpy
 		vl@ NVRAMVariable_Contents + str@ strcpy
-	end else
+	else
 		vl@ str@ strcpy
 	end
 end

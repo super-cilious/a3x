@@ -33,7 +33,7 @@ fn BuildSerialPort { num -- }
 		if (num@ 0 ==)
 			0x4 "interrupt#" DAddProperty
 			DevCurrent@ SerialPortA!
-		end else
+		else
 			0x5 "interrupt#" DAddProperty
 			DevCurrent@ SerialPortB!
 		end

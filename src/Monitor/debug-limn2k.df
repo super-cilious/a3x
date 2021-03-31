@@ -69,23 +69,23 @@ fn private DisImm8 { pc specific op -- shift }
 
 	if (specific@ OPIMM8 ==)
 		op@ "%d" Printf
-	end elseif (specific@ OPIMM8I ==)
+	elseif (specific@ OPIMM8I ==)
 		op@ 1 << "%d" Printf
-	end elseif (specific@ OPIMM8L ==)
+	elseif (specific@ OPIMM8L ==)
 		op@ 2 << "%d" Printf
-	end elseif (specific@ OPIMM8S ==)
+	elseif (specific@ OPIMM8S ==)
 		if (op@ 0x80 &)
 			op@ ~ 1 + 0xFF & "-%d" Printf
-		end else
+		else
 			op@ "%d" Printf
 		end
-	end elseif (specific@ OPIMM8P ==)
+	elseif (specific@ OPIMM8P ==)
 		if (op@ 0x80 &)
 			pc@ op@ ~ 1 + 0xFF & 2 << - "0x%x" Printf
-		end else
+		else
 			pc@ op@ 2 << + "0x%x" Printf
 		end
-	end else
+	else
 		"byte?" Printf
 	end
 
@@ -99,9 +99,9 @@ fn private DisImm16 { pc specific op -- shift }
 
 	if (specific@ OPIMM16 ==)
 		op@ "%d" Printf
-	end elseif (specific@ OPIMM16U ==)
+	elseif (specific@ OPIMM16U ==)
 		op@ 16 << "0x%x" Printf
-	end else
+	else
 		"int?" Printf
 	end
 
@@ -116,12 +116,12 @@ fn private DisImm24 { pc specific op -- shift }
 	if (specific@ OPIMM24P ==)
 		if (op@ 0x800000 &)
 			pc@ op@ ~ 1 + 0xFFFFFF & 2 << - "0x%x" Printf
-		end else
+		else
 			pc@ op@ 2 << + "0x%x" Printf
 		end
-	end elseif (specific@ OPIMM24A ==)
+	elseif (specific@ OPIMM24A ==)
 		pc@ 0xFC000000 & op@ 2 << | "0x%x" Printf
-	end else
+	else
 		"triple?" Printf
 	end
 

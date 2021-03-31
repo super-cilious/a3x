@@ -49,11 +49,11 @@ fn AHDBBootable { part id -- }
 
 			AddBootable
 		end
-	end else
+	else
 		auto pc
 		if (part@ -1 ==)
 			'-' pc!
-		end else
+		else
 			part@ 'a' + pc!
 		end
 		pc@ id@ "dks%d/%l: couldn't read boot record\n" Printf
@@ -127,10 +127,10 @@ fn AHDBPartitions { id -- pcount }
 
 				1 i +=
 			end
-		end else
+		else
 			id@ "dks%d: bad volume descriptor\n" Printf
 		end
-	end else
+	else
 		id@ "dks%d: couldn't read blk0\n" Printf
 	end
 

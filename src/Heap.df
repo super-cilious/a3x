@@ -114,7 +114,7 @@ fn HeapDump { -- }
 
 		if (alloct@ 1 ==)
 			talloc@ size@ + talloc!
-		end else
+		else
 			tfree@ size@ + tfree!
 		end
 
@@ -179,7 +179,7 @@ fn Malloc1 { ac endp startp sz -- ptr }
 
 			if (thissize@ mysize@ ==)
 				1 be!
-			end elseif (thissize@ mysize@ - KHeapHeader_SIZEOF <=)
+			elseif (thissize@ mysize@ - KHeapHeader_SIZEOF <=)
 				thissize@ mysize!
 				1 be!
 			end

@@ -192,9 +192,9 @@ fn WaitNext { -- result }
 
 		if (c@ 'q' ==)
 			0 result!
-		end elseif (c@ 'p' ==)
+		elseif (c@ 'p' ==)
 			0 UsedLines!
-		end elseif (c@ 'a' ==)
+		elseif (c@ 'a' ==)
 			1 AllLines!
 		end
 
@@ -341,7 +341,7 @@ fn MonitorCommandSetProp { -- }
 		dev@ DeviceSelectNode
 			svalue@ 1 + prop@ DSetProperty
 		DeviceExit
-	end else
+	else
 		MonitorParseWord svalue!
 
 		auto nvalue
@@ -517,7 +517,7 @@ fn MonitorCommandPrintenv { -- }
 
 	if (q@ 0 ~=)
 		q@ word@ "%s = \"%s\"\n" Printf
-	end else
+	else
 		word@ "%s is not a variable.\n" Printf
 	end
 
@@ -557,7 +557,7 @@ fn MonitorLsH { tabs dev -- cont }
 			alias@ DeviceSelectNode
 				"path" DGetProperty "-> %s\n" Printf
 			DeviceExit
-		end else
+		else
 			'\n' Putc
 
 			if (tabs@ 1 + pnode@ MonitorLsH ~~)
@@ -611,7 +611,7 @@ fn MonitorCommandDisklabel { -- }
 
 		if (dtype@ "disk" strcmp)
 			1 disk!
-		end elseif (dtype@ "disk-logical" strcmp)
+		elseif (dtype@ "disk-logical" strcmp)
 			2 disk!
 		end
 

@@ -99,7 +99,7 @@ fn DeviceSelect { path -- }
 
 	if (node@ 0 ~=)
 		node@ DevCurrent!
-	end else
+	else
 		path@ "couldn't DeviceSelect '%s'\n" Problem
 	end
 end
@@ -257,7 +257,7 @@ fn DSetProperty { value name -- }
 		value@ mnode@ DeviceProperty_Value + !
 
 		mnode@ DGetProperties ListInsert
-	end else
+	else
 		value@ prop@ DeviceProperty_Value + !
 	end
 end

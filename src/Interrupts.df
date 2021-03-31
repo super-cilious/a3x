@@ -87,7 +87,7 @@ fn Exception { state ecause epc ers badaddr -- }
 
 			if (h@)
 				h@ IntHandler
-			end else
+			else
 				int@ "Spurious interrupt: %x\n" Problem
 			end
 
@@ -111,11 +111,11 @@ fn Exception { state ecause epc ers badaddr -- }
 			epc@ "\[[7mA3X: breakpoint at 0x%x, entering monitor\[[0m\n" Printf
 			state@ DebugMonitor
 			return
-		end else
+		else
 			state@ SavedState!
 			[ecause@]ExceptionNames@ "%s.\n" Problem
 		end
-	end else
+	else
 		epc@ [ecause@]ExceptionNames@ "\n!!!FAULT!!! %s, resetting.\n" Printf
 
 		LateReset

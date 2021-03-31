@@ -114,7 +114,7 @@ fn MonitorDoLine { -- }
 	if (word@ strlen 0 ~=)
 		if (word@ MonitorDoCommand ~~)
 			word@ "%s is not a recognized command.\n" Printf
-		end else return end
+		else return end
 	end
 
 	word@ Free

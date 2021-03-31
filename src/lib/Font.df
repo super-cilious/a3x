@@ -59,7 +59,7 @@ fn FontDrawString { x y str bg color -- }
 		if (c@ '\n' ==)
 			y@ FontHeight + y!
 			sx@ x!
-		end else
+		else
 			x@ y@ c@ bg@ color@ FontDrawChar
 
 			x@ FontWidth + x!

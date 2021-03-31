@@ -54,7 +54,7 @@ fn private DrawBadge { index s -- x y }
 
 	if (s@)
 		0x03FF s!
-	end else
+	else
 		0x6F78 s!
 	end
 
@@ -131,7 +131,7 @@ fn private BeSpecific { t -- }
 		BUIScreenWidth@ 2 / path@ strlen FontWidth * 2 / -
 		y@ FontHeight +
 		path@ -1 0x7FFF FontDrawString
-	end else
+	else
 		BUIScreenWidth@ 2 / osname@ strlen FontWidth * 2 / -
 		y@
 		osname@ strlen FontWidth *
@@ -254,7 +254,7 @@ fn BootUI { -- node }
 
 		if (scan@ 53 ==) (* escape *)
 			return
-		end elseif (scan@ 54 ==) (* left arrow *)
+		elseif (scan@ 54 ==) (* left arrow *)
 			0 BeSpecific
 
 			BUISelected@ 0 DrawBadge drop drop
@@ -264,7 +264,7 @@ fn BootUI { -- node }
 			BUISelected@ 1 DrawBadge drop drop
 
 			1 BeSpecific
-		end elseif (scan@ 55 ==) (* right arrow *)
+		elseif (scan@ 55 ==) (* right arrow *)
 			0 BeSpecific
 
 			BUISelected@ 0 DrawBadge drop drop
@@ -274,7 +274,7 @@ fn BootUI { -- node }
 			BUISelected@ 1 DrawBadge drop drop
 
 			1 BeSpecific
-		end elseif (scan@ 50 ==) (* return *)
+		elseif (scan@ 50 ==) (* return *)
 			[BUISelected@]BootableDevs@ node!
 
 			if (Ctrl@ Shift@ &&)
@@ -284,13 +284,13 @@ fn BootUI { -- node }
 			end
 
 			return
-		end elseif (scan@ 80 ==) (* ctrl *)
+		elseif (scan@ 80 ==) (* ctrl *)
 			1 Ctrl!
-		end elseif (scan@ 32848 ==)
+		elseif (scan@ 32848 ==)
 			0 Ctrl!
-		end elseif (scan@ 82 ==) (* shift *)
+		elseif (scan@ 82 ==) (* shift *)
 			1 Shift!
-		end elseif (scan@ 32850 ==)
+		elseif (scan@ 32850 ==)
 			0 Shift!
 		end
 	end

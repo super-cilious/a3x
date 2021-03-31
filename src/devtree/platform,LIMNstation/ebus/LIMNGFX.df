@@ -157,7 +157,7 @@ fn LGFXBlitBits { bpr fg bg bitd ptr x y w h -- }
 			ndma@ DeviceSelectNode
 				"bitTransfer" DGetMethod LGDMATransfer!
 			DeviceExit
-		end else
+		else
 			return
 		end
 	end

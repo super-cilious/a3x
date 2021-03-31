@@ -84,10 +84,10 @@ fn GetBootNode { -- node }
 	if (node@ 0 ==)
 		if (NumBootableDevs@ 0 ==)
 			return
-		end elseif (NumBootableDevs@ 1 ==)
+		elseif (NumBootableDevs@ 1 ==)
 			[0]BootableDevs@ node!
 			return
-		end else
+		else
 			BootUI node!
 		end
 	end
@@ -134,7 +134,7 @@ fn BootNode { devnode args -- ok }
 	auto pa
 	if (args@)
 		args@ pa!
-	end else
+	else
 		"" pa!
 	end
 
@@ -189,7 +189,7 @@ fn BootNode { devnode args -- ok }
 
 	if (res@ 0 ==)
 		1 ok!
-	end else
+	else
 		9 ok!
 	end
 end
