@@ -150,6 +150,11 @@ fn MonitorCommandsInit { -- }
 	"setprop"
 	MonitorAddCommand
 
+	"[layout] Set keyboard layout."
+	pointerof MonitorCommandSetLayout
+	"setlayout"
+	MonitorAddCommand
+
 	"[addr] Start disassembling at addr."
 	pointerof MonitorCommandDisasm
 	"disasm"
@@ -355,6 +360,27 @@ fn MonitorCommandSetProp { -- }
 	end
 
 	prop@ Free
+end
+
+fn MonitorCommandSetLayout { -- }
+	auto layoutname
+	MonitorParseWord layoutname!
+
+	if (layoutname@ strlen 0 ==)
+		"no layout name\n" Printf
+		layoutname@ Free
+		return
+	end
+
+	auto Kbd
+	"/keyboard" DevTreeWalk Kbd!
+	if (Kbd@ ~~)
+		return
+	end
+
+	Kbd@ DeviceSelectNode
+		layoutname@ "layout" DSetProperty
+	DeviceExit
 end
 
 fn MonitorCommandBoot { -- }

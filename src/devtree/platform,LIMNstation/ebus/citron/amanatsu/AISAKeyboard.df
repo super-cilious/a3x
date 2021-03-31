@@ -31,7 +31,7 @@ fn AKeyboardInit { -- }
 
 					i@ "amanatsu,unit" DAddProperty
 					
-					"dvorak" "layout" DAddProperty
+					"dvorak" "keyboard-layout" NVRAMDefaultGetVar "layout" DAddProperty
 
 					pointerof AKeyboardReadM "read" DAddMethod
 
@@ -169,7 +169,7 @@ fn AKeyboardRead { -- c }
 		return
 	end
 
-	if (code@ 80 >=)
+	if (code@ AKeyboardShiftOffset >=)
 		return
 	end
 
@@ -178,17 +178,21 @@ fn AKeyboardRead { -- c }
 	
 	auto i
 	0 i!
-	while (i@ AKeyboardLayouts@ <)
+	while (i@ AKeyboardLayouts <)
 		if ([i@ 2 *]AKeyboardLayout@ layout@ strcmp)
 			auto layoutptr
 			[i@ 2 * 1 +]AKeyboardLayout@ layoutptr!
 			
 			if (Shift@)
-				layoutptr@ AKeyboardShiftOffset@ code@ + 4 * + @ c!
+				layoutptr@ AKeyboardShiftOffset code@ + 4 * + @ c!
 			else
-				layoutptr@ code@ 4 * + c!
+				layoutptr@ code@ 4 * + @ c!
 			end
+			
+			break
 		end
+
+		i@ 1 + i!
 	end
 end
 

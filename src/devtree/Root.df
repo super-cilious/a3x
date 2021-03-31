@@ -6,7 +6,7 @@ extern BuildTree { -- }
 fn DevRootBuild { -- }
 	"wolf-fucking-machine" DSetName
 
-	pointerof ANTEBDS "2087" DAddProperty
+	pointerof ANTEBDS "buildDate" DAddProperty
 	"3.5.6" "version" DAddProperty
 	030506 "versionNum" DAddProperty
 	"Holesome" "author" DAddProperty
